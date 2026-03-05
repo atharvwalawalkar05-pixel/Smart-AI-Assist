@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f4f6fb;
+  --text: #0f172a;
+  --card: #ffffff;
+  --accent: #2563eb;
+  --muted: #6b7280;
+}
+
+.dark {
+  --bg: #030712;
+  --text: #f9fafb;
+  --card: #111827;
+  --accent: #60a5fa;
+  --muted: #9ca3af;
+}
+
+.high-contrast {
+  --bg: #000000;
+  --text: #ffffff;
+  --card: #000000;
+  --accent: #facc15;
+  --muted: #ffffff;
+}
+
+body {
+  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.13), transparent 45%), var(--bg);
+  color: var(--text);
+  min-width: 360px;
+}
+
+.app-shell {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.tap-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+input:not([type='range']):not([type='checkbox']),
+textarea,
+select {
+  background: #ffffff;
+  color: #0f172a;
+  caret-color: #0f172a;
+}
+
+input:not([type='range']):not([type='checkbox'])::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}
+
+.dark input:not([type='range']):not([type='checkbox']),
+.dark textarea,
+.dark select,
+.high-contrast input:not([type='range']):not([type='checkbox']),
+.high-contrast textarea,
+.high-contrast select {
+  background: #ffffff;
+  color: #0f172a;
+  caret-color: #0f172a;
+}
