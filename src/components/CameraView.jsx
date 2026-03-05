@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ensureTFMockReady } from '../utils/tfMock';
+import { detectObjectsFromVideo, verbalize } from '../utils/detector';
 
 const detections = ['Chair on your left', 'Door ahead', 'Table to your right'];
 
@@ -28,28 +28,37 @@ export default function CameraView({ onUse }) {
 
   const scan = async () => {
     onUse('navigation');
-    await ensureTFMockReady();
-    setStatus('Mock detection model loaded');
-    const sample = detections.sort(() => 0.5 - Math.random()).slice(0, 2);
-    setObjects(sample);
-    if ('vibrate' in navigator) navigator.vibrate([120, 80, 120]);
-    sample.forEach((msg, i) => {
-      const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.rate = 1;
-      setTimeout(() => speechSynthesis.speak(utterance), i * 500);
-    });
+    try {
+      if (!videoRef.current) return;
+      setStatus('Scanning environment…');
+      const preds = await detectObjectsFromVideo(videoRef.current);
+      const lines = verbalize(preds, videoRef.current.videoWidth || 640);
+      setObjects(lines);
+      if ('vibrate' in navigator) navigator.vibrate([120, 80, 120]);
+      lines.forEach((msg, i) => {
+        const utterance = new SpeechSynthesisUtterance(msg);
+        utterance.rate = 1;
+        setTimeout(() => speechSynthesis.speak(utterance), i * 500);
+      });
+      setStatus('Scan complete');
+    } catch (e) {
+      setStatus('Scan failed');
+    }
   };
 
   return (
-    <section className="rounded-2xl bg-[var(--card)] p-4 shadow-soft" aria-label="Navigation camera panel">
+    <section className="panel shadow-soft p-4" aria-label="Navigation camera panel">
       <h3 className="text-lg font-semibold">Navigation Assistance</h3>
-      <p className="mt-1 text-xs text-[var(--muted)]">{status}</p>
+      <p className="mt-1 flex items-center gap-2 text-xs text-[var(--muted)]">
+        <span className={`inline-block h-2 w-2 rounded-full ${status.includes('active') ? 'bg-green-500' : 'bg-slate-400'}`} />
+        {status}
+      </p>
       <video ref={videoRef} autoPlay playsInline className="mt-3 h-56 w-full rounded-xl bg-slate-900 object-cover" aria-label="Live camera feed" />
       <div className="mt-3 grid grid-cols-2 gap-3">
-        <button onClick={startCamera} className="tap-target rounded-2xl border border-slate-300 px-3 py-3 font-semibold">
+        <button onClick={startCamera} className="tap-target rounded-2xl btn-secondary px-3 py-3 font-semibold">
           Start Camera
         </button>
-        <button onClick={scan} className="tap-target rounded-2xl bg-[var(--accent)] px-3 py-3 font-semibold text-white">
+        <button onClick={scan} className="tap-target rounded-2xl btn-primary px-3 py-3 font-semibold text-white">
           Scan Environment
         </button>
       </div>

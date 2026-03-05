@@ -7,7 +7,7 @@ export default function Simplifier({ onUse }) {
   const [focusMode, setFocusMode] = useState(false);
 
   return (
-    <section className="rounded-2xl bg-[var(--card)] p-4 shadow-soft" aria-label="Cognitive support panel">
+    <section className="panel shadow-soft p-4" aria-label="Cognitive support panel">
       <h3 className="text-lg font-semibold">Learning and Cognitive Support</h3>
       <textarea
         rows={5}
@@ -23,7 +23,7 @@ export default function Simplifier({ onUse }) {
             setOutput(summarizeText(input));
             onUse('learning');
           }}
-          className="tap-target rounded-2xl bg-[var(--accent)] py-3 font-semibold text-white"
+          className="tap-target rounded-2xl btn-primary py-3 font-semibold text-white"
         >
           Summarize
         </button>
@@ -32,14 +32,14 @@ export default function Simplifier({ onUse }) {
             setOutput(simplifyText(input));
             onUse('learning');
           }}
-          className="tap-target rounded-2xl border border-slate-300 py-3 font-semibold"
+          className="tap-target rounded-2xl btn-secondary py-3 font-semibold"
         >
           Simplify (ELI5)
         </button>
       </div>
       <button
         onClick={() => setFocusMode((v) => !v)}
-        className="tap-target mt-3 w-full rounded-2xl border border-slate-300 py-3 text-sm font-semibold"
+        className="tap-target mt-3 w-full rounded-2xl btn-secondary py-3 text-sm font-semibold"
       >
         {focusMode ? 'Exit Focus Mode' : 'Enter Focus Mode'}
       </button>

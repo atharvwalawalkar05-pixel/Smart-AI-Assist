@@ -30,7 +30,7 @@ export default function TextToSpeech({ pitch, rate, setPitch, setRate, voice, on
   };
 
   return (
-    <section className="rounded-2xl bg-[var(--card)] p-4 shadow-soft" aria-label="Text to speech panel">
+    <section className="panel shadow-soft p-4" aria-label="Text to speech panel">
       <h3 className="text-lg font-semibold">Text to Speech</h3>
       <textarea
         value={text}
@@ -41,16 +41,34 @@ export default function TextToSpeech({ pitch, rate, setPitch, setRate, voice, on
         aria-label="Text input for speech output"
       />
       <div className="mt-3 grid gap-3">
-        <label className="text-sm font-medium">
-          Pitch: {pitch.toFixed(1)}
-          <input type="range" min="0.8" max="1.2" step="0.05" value={pitch} onChange={(e) => setPitch(Number(e.target.value))} className="w-full" />
-        </label>
-        <label className="text-sm font-medium">
-          Speed: {rate.toFixed(1)}
-          <input type="range" min="0.85" max="1.15" step="0.05" value={rate} onChange={(e) => setRate(Number(e.target.value))} className="w-full" />
-        </label>
+        <div className="rounded-xl border border-slate-300 p-3">
+          <label className="block text-xs font-semibold uppercase text-[var(--muted)]">Pitch</label>
+          <input
+            type="range"
+            min="0.8"
+            max="1.2"
+            step="0.05"
+            value={pitch}
+            onChange={(e) => setPitch(Number(e.target.value))}
+            className="mt-2 w-full"
+          />
+          <div className="mt-1 text-right text-xs">{pitch.toFixed(1)}</div>
+        </div>
+        <div className="rounded-xl border border-slate-300 p-3">
+          <label className="block text-xs font-semibold uppercase text-[var(--muted)]">Speed</label>
+          <input
+            type="range"
+            min="0.85"
+            max="1.15"
+            step="0.05"
+            value={rate}
+            onChange={(e) => setRate(Number(e.target.value))}
+            className="mt-2 w-full"
+          />
+          <div className="mt-1 text-right text-xs">{rate.toFixed(1)}</div>
+        </div>
       </div>
-      <button onClick={speak} className="tap-target mt-4 w-full rounded-2xl bg-[var(--accent)] px-4 py-3 font-semibold text-white">
+      <button onClick={speak} className="tap-target mt-4 w-full rounded-2xl btn-primary px-4 py-3 font-semibold text-white">
         Speak
       </button>
     </section>

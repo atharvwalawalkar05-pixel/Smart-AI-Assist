@@ -8,6 +8,8 @@
   --card: #ffffff;
   --accent: #2563eb;
   --muted: #6b7280;
+  --card-2: #f1f5f9;
+  --ring: rgba(37, 99, 235, 0.35);
 }
 
 .dark {
@@ -16,6 +18,8 @@
   --card: #111827;
   --accent: #60a5fa;
   --muted: #9ca3af;
+  --card-2: #0b1220;
+  --ring: rgba(96, 165, 250, 0.4);
 }
 
 .high-contrast {
@@ -24,6 +28,8 @@
   --card: #000000;
   --accent: #facc15;
   --muted: #ffffff;
+  --card-2: #000000;
+  --ring: rgba(250, 204, 21, 0.6);
 }
 
 body {
@@ -43,6 +49,36 @@ body {
 .tap-target {
   min-height: 48px;
   min-width: 48px;
+}
+
+/* Design system helpers */
+@layer components {
+  .shadow-soft {
+    box-shadow:
+      0 1px 0 rgba(15, 23, 42, 0.06),
+      0 8px 24px rgba(15, 23, 42, 0.09);
+  }
+  .glass {
+    backdrop-filter: saturate(120%) blur(8px);
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  }
+  .panel {
+    border-radius: 18px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), var(--card-2));
+    border: 1px solid color-mix(in srgb, var(--text) 6%, transparent);
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, #000 0%), color-mix(in srgb, var(--accent) 80%, #000 20%));
+    color: #fff;
+  }
+  .btn-secondary {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), var(--card-2));
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  }
+  .ring-accent {
+    box-shadow: 0 0 0 3px var(--ring);
+  }
 }
 
 input:not([type='range']):not([type='checkbox']),
