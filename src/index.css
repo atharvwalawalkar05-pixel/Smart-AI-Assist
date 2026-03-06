@@ -33,9 +33,13 @@
 }
 
 body {
-  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.13), transparent 45%), var(--bg);
+  background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(37, 99, 235, 0.05), transparent 40%),
+              var(--bg);
   color: var(--text);
   min-width: 360px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app-shell {
